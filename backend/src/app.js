@@ -11,6 +11,10 @@ app.use(express.json());
 
 const upload = multer({ storage: multer.memoryStorage() });
 
+// Add this above your app.post('/')
+app.get('/', (req, res) => {
+  res.json({ message: "PicDrop API is active!" });
+});
 
 app.post('/', upload.single("image"), async (req, res) => {
     
