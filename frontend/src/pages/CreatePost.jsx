@@ -10,6 +10,9 @@ const CreatePost = () => {
   const [preview, setPreview] = useState(null);
   const [caption, setCaption] = useState("");
 
+  // Update this to your Render URL
+  const API_BASE_URL = "https://picdrop-nm43.onrender.com";
+
   const handleFile = (file) => {
     if (!file) return;
     setSelectedFile(file);
@@ -38,15 +41,16 @@ const CreatePost = () => {
     formData.append("image", selectedFile);
     formData.append("caption", caption);
 
+    // FIXED: Changed localhost to Render URL and path to "/"
     axios
-      .post("http://localhost:5000/upload", formData)
+      .post(`${API_BASE_URL}/`, formData) 
       .then((res) => {
+        console.log("Upload Success:", res.data);
         navigate("/feed");
-        console.log(res);
       })
       .catch((err) => {
-        console.log(err);
-        alert("Error creating post");
+        console.error("Upload Error:", err);
+        alert("Error creating post. Make sure your Render backend is awake!");
       });
   };
 
@@ -97,7 +101,6 @@ const CreatePost = () => {
         {/* Submit */}
         <button
           onClick={handleSubmit}
-          
           className="bg-neutral-800 hover:bg-neutral-700 active:bg-neutral-900 border border-neutral-700 hover:border-neutral-600 text-white font-bold text-sm tracking-widest rounded-xl py-4 w-full transition-colors duration-200"
         >
           Drop

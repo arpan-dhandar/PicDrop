@@ -7,8 +7,12 @@ const Feed = () => {
   const navigate = useNavigate();
   const [posts, setPosts] = useState([])
 
+  // Update this to your Render URL
+  const API_BASE_URL = "https://picdrop-nm43.onrender.com";
+
   useEffect(() => {
-    axios.get("http://localhost:5000/posts")
+    // FIXED: Changed localhost to Render URL
+    axios.get(`${API_BASE_URL}/posts`)
       .then((res) => {
         setPosts(res.data.data || [])
       })
@@ -20,7 +24,6 @@ const Feed = () => {
       {/* Header */}
       <header className="flex justify-between items-center px-8 py-8 md:px-12">
         <h1 className="text-2xl font-black tracking-tighter">PicDrop</h1>
-        {/* FIX: Wrapped navigate in an arrow function */}
         <button 
           className="px-5 py-2 border border-zinc-800 rounded-full text-xs font-bold hover:bg-white hover:text-black transition-all duration-300 uppercase tracking-widest"
           onClick={() => navigate("/")} 
@@ -45,7 +48,6 @@ const Feed = () => {
           <div className="flex flex-col items-center justify-center h-[60vh] text-center">
             <p className="text-zinc-600 text-lg font-medium">Your vault is empty</p>
             <p className="text-zinc-800 text-sm mb-6">Start dropping your moments</p>
-            {/* FIX: Wrapped navigate in an arrow function */}
             <button 
               className="px-8 py-3 border border-zinc-800 rounded-2xl hover:border-zinc-500 transition-colors" 
               onClick={() => navigate("/")}
@@ -59,4 +61,4 @@ const Feed = () => {
   )
 }
 
-export default Feed
+export default Feed;
