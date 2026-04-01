@@ -10,7 +10,7 @@ const CreatePost = () => {
   const [preview, setPreview] = useState(null);
   const [caption, setCaption] = useState("");
 
-  // Update this to your Render URL
+  // Your Live Render URL
   const API_BASE_URL = "https://picdrop-nm43.onrender.com";
 
   const handleFile = (file) => {
@@ -41,7 +41,7 @@ const CreatePost = () => {
     formData.append("image", selectedFile);
     formData.append("caption", caption);
 
-    // FIXED: Changed localhost to Render URL and path to "/"
+    // FIXED: Using backticks for the variable and pointing to root "/"
     axios
       .post(`${API_BASE_URL}/`, formData) 
       .then((res) => {
@@ -50,21 +50,18 @@ const CreatePost = () => {
       })
       .catch((err) => {
         console.error("Upload Error:", err);
-        alert("Error creating post. Make sure your Render backend is awake!");
+        alert("Error creating post. The server might be waking up—try again in 30 seconds.");
       });
   };
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center font-sans">
       <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-10 w-full max-w-lg flex flex-col gap-5">
-
-        {/* Header */}
         <div className="text-center mb-2">
           <h1 className="text-5xl font-extrabold text-white tracking-tight">PicDrop</h1>
           <p className="text-neutral-500 text-sm mt-2">Drop your moment into the vault</p>
         </div>
 
-        {/* Drop Zone */}
         <div
           onClick={handleBrowse}
           onDrop={handleDrop}
@@ -78,9 +75,7 @@ const CreatePost = () => {
           ) : (
             <>
               <svg className="text-neutral-600" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                <polyline points="17 8 12 3 7 8"/>
-                <line x1="12" y1="3" x2="12" y2="15"/>
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
               </svg>
               <span className="text-neutral-300 font-medium">Drop your image here</span>
               <span className="text-neutral-600 text-sm">or click to browse</span>
@@ -89,7 +84,6 @@ const CreatePost = () => {
           <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
         </div>
 
-        {/* Caption */}
         <input
           type="text"
           placeholder="Add a caption..."
@@ -98,22 +92,13 @@ const CreatePost = () => {
           className="bg-neutral-900 border border-neutral-800 rounded-xl px-5 py-4 text-neutral-300 text-sm placeholder-neutral-600 outline-none focus:border-neutral-600 transition-colors w-full"
         />
 
-        {/* Submit */}
-        <button
-          onClick={handleSubmit}
-          className="bg-neutral-800 hover:bg-neutral-700 active:bg-neutral-900 border border-neutral-700 hover:border-neutral-600 text-white font-bold text-sm tracking-widest rounded-xl py-4 w-full transition-colors duration-200"
-        >
+        <button onClick={handleSubmit} className="bg-neutral-800 hover:bg-neutral-700 active:bg-neutral-900 border border-neutral-700 hover:border-neutral-600 text-white font-bold text-sm tracking-widest rounded-xl py-4 w-full transition-colors duration-200">
           Drop
         </button>
 
-        {/* View Vault */}
-        <button
-          onClick={() => navigate("/feed")}
-          className="text-neutral-500 hover:text-neutral-300 text-sm text-center transition-colors duration-200 bg-transparent border-none cursor-pointer"
-        >
+        <button onClick={() => navigate("/feed")} className="text-neutral-500 hover:text-neutral-300 text-sm text-center transition-colors duration-200 bg-transparent border-none cursor-pointer">
           View Vault →
         </button>
-
       </div>
     </div>
   );
